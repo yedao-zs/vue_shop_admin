@@ -30,11 +30,13 @@ import axios from '@/utils/axios'
 import md5 from 'js-md5'
 import { reactive, ref } from 'vue'
 import { localSet } from '@/utils'
+import { reject } from 'lodash';
+//做了一个拦截，无法直接获取value的值
 const loginForm = ref(null)
 const state = reactive({
   ruleForm: {
-    username: '',
-    password: ''
+    username: 'admin',
+    password: '123456'
   },
   checked: true,
   rules: {
@@ -45,10 +47,25 @@ const state = reactive({
       { required: 'true', message: '密码不能为空', trigger: 'blur' }
     ]
   }
-})
+}) 
 const submitForm = async () => {
+/*   console.log(loginForm.value.validate((v)=>{
+    // throw "cuowu"
+    //我先执行，但不影响状态
+    console.log(v)
+    //后执行,循环已经走过一遍，状态已发生改变，无法更改
+    setTimeout(()=>{
+      throw "提交错误"
+    },1000)
+  })) */
+  console.log(loginForm.value)
+  console.log(loginForm.value.validate)//Proxy 在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。
+  //pending promise未进行调用,再次在里面包一个函数，可以拿到参数，参数为布尔值
+  // console.log(loginForm.value)
   loginForm.value.validate((valid) => {
-    if (valid) {
+    // console.log(valid)
+   /*  if (valid) {
+    
       axios.post('/adminUser/login', {
         userName: state.ruleForm.username || '',
         passwordMd5: md5(state.ruleForm.password)
@@ -59,7 +76,11 @@ const submitForm = async () => {
     } else {
       console.log('error submit!!')
       return false;
-    }
+    } */
+    // axios.required
+    const requests = axios.create((config)=>{
+      
+    })
   })
 }
 const resetForm = () => {
