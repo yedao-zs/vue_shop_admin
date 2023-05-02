@@ -61,11 +61,23 @@ const state = reactive({
   },
 })
 onMounted(() => {
-  axios.get('/adminUser/profile').then(res => {
+  // http://backend-api-02.newbee.ltd/manage-api/v1/adminUser/profile
+  axios.get('/adminUser/profile',{
+}).then(res => {
     state.user = res
     state.nameForm.loginName = res.loginUserName
     state.nameForm.nickName = res.nickName
   })
+  axios.interceptor.request.use()
+  axios.interceptor.respones.use()
+  axios({
+    url:'',
+    method:'',
+    query:{},
+    params:{}
+  }).then((d)=>{})
+  .catch(()=>{})
+
 })
 const submitName = () => {
   nameRef.value.validate((vaild) => {
