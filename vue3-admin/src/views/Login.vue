@@ -76,7 +76,7 @@ const submitForm = async () => {
         localSet('token', res)
         //路由拦截里面会进行验证token存在不，不存在会提示管理员未登录
        //在app.vue界面中，设置了路由拦截，当没有token，就会重新进入登录界面
-        // window.location.href = '/'
+        window.location.href = '/'
       })
     } else {
       console.log('error submit!!')
